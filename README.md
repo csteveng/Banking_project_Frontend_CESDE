@@ -1,2 +1,2 @@
-# Banking_project_CESDE_2026
+# Integrator Project: Banking Backend
 Project to show all the work done for the integrator project.
