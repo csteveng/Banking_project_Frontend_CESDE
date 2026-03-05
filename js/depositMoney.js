@@ -1,17 +1,15 @@
-let saldo = 10000;
-
 function consignarDinero() {
+    const saldo = retrieveBalance();
     let monto = Number(prompt("Ingrese el monto a consignar:"));
 
     if (monto > 0) {
 
         // este es una funcion
-
-        saldo += monto;
-
+        const saldoTotal = addNewTransaction('deposit', monto);
+        
         console.log("Consignación exitosa.");
         console.log("Monto consignado: $" + monto);
-        console.log("Nuevo saldo: $" + saldo);
+        console.log("Nuevo saldo: $" + saldoTotal);
 
     } else {
         console.log(" Monto inválido");

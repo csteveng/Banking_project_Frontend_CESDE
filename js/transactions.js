@@ -1,13 +1,49 @@
-const transactionsList = [];
+function saveTransactionsArrayLocalStorage (transactions) {
+  const transactionsAsString = JSON.stringify(transactions);
+  localStorage.setItem("movimientos", transactionsAsString);
+}
+
+function retrieveTransactionsArrayLocalStorage() {
+  const transactions = localStorage.getItem("movimientos");
+  const transactionsAsJSON = JSON.parse(transactions || []);
+  return transactionsAsJSON;
+}
 
 function addNewTransaction (type, ammount) {
-  transactionsList.push([Date.Now(), type, ammount]);
+  const transactionsList = retrieveTransactionsArrayLocalStorage(); 
+  transactionsList.push([new Date(), type, ammount]);
+  const newBalance = updateBalance(type, ammount);
+  saveTransactionsArrayLocalStorage(transactionsList);
+  return newBalance;
 }
 
 function listAllTransactions() {
-  transactionsList.forEach(transaction => {
+  const transactionsList = retrieveTransactionsArrayLocalStorage();
+  if(!transactionsList) {
+    alert('¡No hay datos de movimientos disponibles!');
+  } else {
+     transactionsList.forEach(transaction => {
     console.log(`Fecha: ${transaction[0]} Tipo: ${transaction[1]} Monto: ${transaction[2]}`);
   });
+  }
+ 
+}
+
+function updateBalance (type, ammount) {
+  let balance = retrieveBalance();
+  if( type === 'deposit') {
+    balance += ammount;
+    localStorage.setItem('saldoTotal', balance);
+  }
+  else if (type === 'withdraw') {
+    balance -= ammount;
+    localStorage.setItem('saldoTotal', balance);
+  }
+  return balance;
+}
+
+function retrieveBalance (){
+  return parseFloat(localStorage.getItem("saldoTotal") || localStorage.getItem("saldoInicial1"));
 }
 
 function showTransactionsMenu() {
@@ -33,8 +69,11 @@ function startTransaction(userOption) {
     case "4":
       listAllTransactions();
     break;
+    case null:
+    return;
     default:
       alert("Opción no válida, intente nuevamente");
-      showTransactionsMenu();
+    break;
   }
+  showTransactionsMenu();
 }

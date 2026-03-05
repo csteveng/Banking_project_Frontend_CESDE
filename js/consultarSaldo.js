@@ -1,12 +1,8 @@
-function actualizarSaldo() {
-    
-}
-
 function consultarSaldo () {
+    let saldo = retrieveBalance();
 
-    let saldo = localStorage.getItem("saldo");
     if(saldo > 0){
-        return saldo;
+        console.log(`Tu saldo actual es ${saldo}`);;
     }
 
     else if (saldo === 0){

@@ -11,6 +11,7 @@ function createUser() {
     localStorage.setItem("Usuario1", nombre1);
     localStorage.setItem("password1", password1);
     localStorage.setItem("saldoInicial1", saldoInicial1);
+    localStorage.setItem("movimientos", "[]");
 
     adminValidated = true;
     alert(`Usuario "${nombre1}" registrado exitosamente`);
